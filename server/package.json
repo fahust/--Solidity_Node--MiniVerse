@@ -1,0 +1,29 @@
+{
+  "name": "miniverse",
+  "author": {
+    "email": "kevin.dellova@hotmail.fr",
+    "name": "Fahust"
+  },
+  "version": "0.0.1",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^18.7.8",
+    "dotenv": "^16.0.1",
+    "ethers": "5.6.9",
+    "express": "^4.18.1",
+    "jsonwebtoken": "^8.5.1",
+    "nft.storage": "^7.0.0",
+    "nodemon": "^2.0.19",
+    "ts-node": "^10.9.1",
+    "tslint": "^6.1.3",
+    "typescript": "^4.7.4",
+    "ws": "^8.8.1"
+  },
+  "scripts": {
+    "start:dev": "nodemon",
+    "watch": "nodemon -e ts -w ./src -x yarn watch:serve",
+    "watch:serve": "ts-node src/index.ts",
+    "lint": "tslint -e \"node_modules/**/*.ts\" -p tsconfig.json -c tslint.json"
+  }
+}

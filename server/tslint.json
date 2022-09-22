@@ -1,0 +1,34 @@
+{
+    "extends": "tslint:recommended",
+    "rules": {
+        "max-line-length": {
+            "options": [120]
+        },
+        "new-parens": true,
+        "no-arg": true,
+        "no-bitwise": true,
+        "no-conditional-assignment": true,
+        "no-consecutive-blank-lines": false,
+        "no-console": {"severity": "none"},
+        "no-var-requires": {"severity": "none"},
+        "no-trailing-whitespace": {"severity": "warning"},
+        "triple-equals": {"severity": "warning"},
+        "comment-format": {"severity": "warning"},
+        "no-empty": {"severity": "warning"},
+        "no-var-keyword": {"severity": "warning"},
+        "only-arrow-functions": {"severity": "warning"},
+        "object-literal-shorthand": {"severity": "warning"},
+        "array-type": {"severity": "warning"},
+        "prefer-const": {"severity": "warning"}
+    },
+    "jsRules": {
+        "max-line-length": {
+            "options": [120]
+        }
+    },
+    "linterOptions": {
+        "exclude": [
+            "node_modules"
+        ]
+    }
+}

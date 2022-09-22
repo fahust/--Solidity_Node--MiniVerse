@@ -1,0 +1,442 @@
+{
+  "manifestVersion": "3.2",
+  "admin": {
+    "address": "0xA0afD3ceAAE5f5bb46171056C23c4f8724F2Cbf2",
+    "txHash": "0xccef9e136c32c5f7e3751e3f77def7f0eb23bc733b8484cc4efc141259d333f0"
+  },
+  "proxies": [
+    {
+      "address": "0xC5299f758c752902FE1f7a18922dE0defF8245D7",
+      "txHash": "0xa6781533d7b14135d0aa90de0b4eb50314a7c98da8f6a9ff94c3d13e7a5b86e3",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x9B2F69a73Ad449AaD9D3B45da4b302dE338BE40d",
+      "txHash": "0x1de4f8595aa1dabd6abefca16c8101eb40761117901525a7bd636c67e01c6c48",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xA1477bea4bc5C72Fa111Dc78efeA49E1A3c1833c",
+      "txHash": "0x78eaf3bab0d9c0e3accecdde123e43760b3794514da29bcb6f90bb446854ac06",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xB8f926F218c51C3c7ff56e886FB649EF621FE037",
+      "txHash": "0x8f4ff494da2580fa44e871e0da3bca224b1ec91290ba44ca113e2dcb3f9f81fc",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x820Fee498C94644c86420a6a8Dd1bB02f03552b5",
+      "txHash": "0xed3957755601c42d869a8920f51003197ad0ea9265df60ff5dda1dd16a3a95dc",
+      "kind": "transparent"
+    }
+  ],
+  "impls": {
+    "077a3d248a44cd0e2ff9bdc0477df038a08d916abba5a500bc9fc764ea2bff8f": {
+      "address": "0x269F5bC1Ab7e0e607035aaf09ed6D6418a93AB8d",
+      "txHash": "0xd026ebd40c3bfb4b0fffb1a97b1b79fad610f8eb9b84c897a3f3c827f40b51aa",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "..\\@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:39"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "..\\@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:44"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "..\\@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "..\\@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:22"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "..\\@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:87"
+          },
+          {
+            "contract": "ReentrancyGuardUpgradeable",
+            "label": "_status",
+            "type": "t_uint256",
+            "src": "..\\@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:38"
+          },
+          {
+            "contract": "ReentrancyGuardUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "..\\@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:74"
+          },
+          {
+            "contract": "MarketPlace",
+            "label": "_lists",
+            "type": "t_mapping(t_uint256,t_struct(List)8460_storage)",
+            "src": "..\\project:\\contracts\\MarketPlace.sol:15"
+          },
+          {
+            "contract": "MarketPlace",
+            "label": "_tokens",
+            "type": "t_mapping(t_uint256,t_struct(Token)8470_storage)",
+            "src": "..\\project:\\contracts\\MarketPlace.sol:17"
+          },
+          {
+            "contract": "MarketPlace",
+            "label": "countList",
+            "type": "t_uint256",
+            "src": "..\\project:\\contracts\\MarketPlace.sol:20"
+          },
+          {
+            "contract": "MarketPlace",
+            "label": "countTokens",
+            "type": "t_uint256",
+            "src": "..\\project:\\contracts\\MarketPlace.sol:22"
+          },
+          {
+            "contract": "MarketPlace",
+            "label": "INAddressFees",
+            "type": "t_address",
+            "src": "..\\project:\\contracts\\MarketPlace.sol:25"
+          },
+          {
+            "contract": "MarketPlace",
+            "label": "INFeesBeneficiaries",
+            "type": "t_uint256",
+            "src": "..\\project:\\contracts\\MarketPlace.sol:28"
+          },
+          {
+            "contract": "MarketPlace",
+            "label": "initialized",
+            "type": "t_bool",
+            "src": "..\\project:\\contracts\\MarketPlace.sol:36"
+          }
+        ],
+        "types": {
+          "t_mapping(t_uint256,t_struct(List)8460_storage)": {
+            "label": "mapping(uint256 => struct Struct.List)"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_struct(List)8460_storage": {
+            "label": "struct Struct.List",
+            "members": [
+              {
+                "label": "addressContractToken",
+                "type": "t_address"
+              },
+              {
+                "label": "addressMinter",
+                "type": "t_address"
+              },
+              {
+                "label": "_royaltiesAddr",
+                "type": "t_array(t_address)dyn_storage"
+              },
+              {
+                "label": "_royaltiesPercent",
+                "type": "t_array(t_uint256)dyn_storage"
+              },
+              {
+                "label": "listingId",
+                "type": "t_uint256"
+              },
+              {
+                "label": "startDate",
+                "type": "t_uint256"
+              },
+              {
+                "label": "timeAuction",
+                "type": "t_uint256"
+              },
+              {
+                "label": "paused",
+                "type": "t_bool"
+              },
+              {
+                "label": "direct",
+                "type": "t_bool"
+              },
+              {
+                "label": "tokenType",
+                "type": "t_uint8"
+              }
+            ]
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_array(t_address)dyn_storage": {
+            "label": "address[]"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_uint8": {
+            "label": "uint8"
+          },
+          "t_mapping(t_uint256,t_struct(Token)8470_storage)": {
+            "label": "mapping(uint256 => struct Struct.Token)"
+          },
+          "t_struct(Token)8470_storage": {
+            "label": "struct Struct.Token",
+            "members": [
+              {
+                "label": "lastBidder",
+                "type": "t_struct(Bidder)8437_storage"
+              },
+              {
+                "label": "_tokenInAuction",
+                "type": "t_uint256"
+              },
+              {
+                "label": "listingId",
+                "type": "t_uint256"
+              },
+              {
+                "label": "minPrice",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_struct(Bidder)8437_storage": {
+            "label": "struct Struct.Bidder",
+            "members": [
+              {
+                "label": "addressBidder",
+                "type": "t_address"
+              },
+              {
+                "label": "bid",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          }
+        }
+      }
+    },
+    "ee341d3839143dcd088715fc5be7bc35b3afc171a5e1f82b9fc9f7fcba725212": {
+      "address": "0x089767A98C6CAb59b429485d6360ab2243e6c4Ef",
+      "txHash": "0x821d926226f673990d92af3f7811a56340cb115ebed5ced2c39c37bc6814bfaf",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "..\\@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:39"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "..\\@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:44"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "..\\@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "..\\@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:22"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "..\\@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:87"
+          },
+          {
+            "contract": "ReentrancyGuardUpgradeable",
+            "label": "_status",
+            "type": "t_uint256",
+            "src": "..\\@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:38"
+          },
+          {
+            "contract": "ReentrancyGuardUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "..\\@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:74"
+          },
+          {
+            "contract": "MarketPlaceV2",
+            "label": "_lists",
+            "type": "t_mapping(t_uint256,t_struct(List)8460_storage)",
+            "src": "..\\project:\\contracts\\MarketPlaceV2.sol:15"
+          },
+          {
+            "contract": "MarketPlaceV2",
+            "label": "_tokens",
+            "type": "t_mapping(t_uint256,t_struct(Token)8470_storage)",
+            "src": "..\\project:\\contracts\\MarketPlaceV2.sol:17"
+          },
+          {
+            "contract": "MarketPlaceV2",
+            "label": "countList",
+            "type": "t_uint256",
+            "src": "..\\project:\\contracts\\MarketPlaceV2.sol:20"
+          },
+          {
+            "contract": "MarketPlaceV2",
+            "label": "countTokens",
+            "type": "t_uint256",
+            "src": "..\\project:\\contracts\\MarketPlaceV2.sol:22"
+          },
+          {
+            "contract": "MarketPlaceV2",
+            "label": "INAddressFees",
+            "type": "t_address",
+            "src": "..\\project:\\contracts\\MarketPlaceV2.sol:26"
+          },
+          {
+            "contract": "MarketPlaceV2",
+            "label": "INFeesBeneficiaries",
+            "type": "t_uint256",
+            "src": "..\\project:\\contracts\\MarketPlaceV2.sol:29"
+          },
+          {
+            "contract": "MarketPlaceV2",
+            "label": "initialized",
+            "type": "t_bool",
+            "src": "..\\project:\\contracts\\MarketPlaceV2.sol:37"
+          }
+        ],
+        "types": {
+          "t_mapping(t_uint256,t_struct(List)8460_storage)": {
+            "label": "mapping(uint256 => struct Struct.List)"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_struct(List)8460_storage": {
+            "label": "struct Struct.List",
+            "members": [
+              {
+                "label": "addressContractToken",
+                "type": "t_address"
+              },
+              {
+                "label": "addressMinter",
+                "type": "t_address"
+              },
+              {
+                "label": "_royaltiesAddr",
+                "type": "t_array(t_address)dyn_storage"
+              },
+              {
+                "label": "_royaltiesPercent",
+                "type": "t_array(t_uint256)dyn_storage"
+              },
+              {
+                "label": "listingId",
+                "type": "t_uint256"
+              },
+              {
+                "label": "startDate",
+                "type": "t_uint256"
+              },
+              {
+                "label": "timeAuction",
+                "type": "t_uint256"
+              },
+              {
+                "label": "paused",
+                "type": "t_bool"
+              },
+              {
+                "label": "direct",
+                "type": "t_bool"
+              },
+              {
+                "label": "tokenType",
+                "type": "t_uint8"
+              }
+            ]
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_array(t_address)dyn_storage": {
+            "label": "address[]"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_uint8": {
+            "label": "uint8"
+          },
+          "t_mapping(t_uint256,t_struct(Token)8470_storage)": {
+            "label": "mapping(uint256 => struct Struct.Token)"
+          },
+          "t_struct(Token)8470_storage": {
+            "label": "struct Struct.Token",
+            "members": [
+              {
+                "label": "lastBidder",
+                "type": "t_struct(Bidder)8437_storage"
+              },
+              {
+                "label": "_tokenInAuction",
+                "type": "t_uint256"
+              },
+              {
+                "label": "listingId",
+                "type": "t_uint256"
+              },
+              {
+                "label": "minPrice",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_struct(Bidder)8437_storage": {
+            "label": "struct Struct.Bidder",
+            "members": [
+              {
+                "label": "addressBidder",
+                "type": "t_address"
+              },
+              {
+                "label": "bid",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          }
+        }
+      }
+    }
+  }
+}

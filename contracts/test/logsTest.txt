@@ -1,0 +1,71 @@
+MARKETPLACE ERC721A
+Brand account, mint 111 token
+Brand client account 2, bidding
+Brand account, wei balance at the end of marketplaceERC721A : 9992254051090000000000
+Marketplace contract, wei balance at the end of marketplaceERC721A : 1000000000000000000
+Brand account, token balance at the end of marketplaceERC721A : 119
+Brand client account, token balance at the end of marketplaceERC721A : 11
+Brand client 2 account, token balance at the end of marketplaceERC721A : 11
+Marketplace, token balance at the end of marketplaceERC721A : 1
+
+
+MARKETPLACEERC1155
+Brand account, wei balance at the end of marketplaceERC1155 : 9994246617170000000000
+Marketplace contract, wei balance at the end of marketplaceERC1155 : 2
+Brand account, token balance at the end of marketplaceERC1155 : 9
+Brand client account, token id 0 balance at the end of marketplaceERC1155 : 1
+Brand client account 2, token id 0 balance at the end of marketplaceERC1155 : 0
+Brand client account, token id 1 balance at the end of marketplaceERC1155 : 1
+Brand client account 2, token id 1 balance at the end of marketplaceERC1155 : 0
+Marketplace contract, token balance at the end of marketplaceERC1155 : 0
+
+
+DROP CONTRACT
+Brand account, wei balance at the end of drop : 9994014116030000000000
+ERC1155contract, wei balance at the end of drop : 1
+ERC721A contract, wei balance at the end of drop : 0
+Brand client account, token balance ERC721A at the end of drop : 103
+Brand client account 2, token balance ERC721A at the end of drop : 0
+Brand client account, token balance ERC1155 at the end of drop : 23
+Brand client account 2, token balance ERC1155 at the end of drop : 0
+ERC1155 drop contract, token balance ERC1155 at the end of drop : 0
+ERC721A drop contract, token balance ERC721A at the end of drop : 0
+Brand account, mint 111 token
+Brand account, mint 111 token
+Brand account, mint 111 token
+Brand account, wei balance at the end of drop : 9994477059210000000000
+ERC1155contract, wei balance at the end of drop : 0
+Brand client account, token balance ERC1155 id 0 at the end of drop : 100
+Brand client account, token balance ERC1155 id 1 at the end of drop : 0
+Brand client account, token balance ERC1155 id 2 at the end of drop : 1
+Brand client account 2, token balance ERC1155 at the end of drop : 40
+ERC1155 drop contract, token balance ERC1155 at the end of drop : 0
+
+
+RANDOM DROP CONTRACT
+Brand account, wei balance at the end of drop : 9994405974890000000000
+ERC721R contract, wei balance at the end of drop : 0
+Brand client account, token balance ERC721R at the end of drop : 103
+Brand client account 2, token balance ERC721R at the end of drop : 0
+ERC721R drop contract, token balance ERC721R at the end of drop : 0
+
+
+DROP CONTRACT
+
+
+DROP CONTRACT
+
+
+DROP CONTRACT
+
+
+DROP CONTRACT
+Brand account, wei balance at the end of drop : 9993134968230000000000
+ERC1155contract, wei balance at the end of drop : 1
+ERC721A contract, wei balance at the end of drop : 0
+Brand client account, token balance ERC721A at the end of drop : 103
+Brand client account 2, token balance ERC721A at the end of drop : 0
+Brand client account, token balance ERC1155 at the end of drop : 23
+Brand client account 2, token balance ERC1155 at the end of drop : 0
+ERC1155 drop contract, token balance ERC1155 at the end of drop : 0
+ERC721A drop contract, token balance ERC721A at the end of drop : 0

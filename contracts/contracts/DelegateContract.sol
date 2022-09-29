@@ -40,31 +40,18 @@ contract DelegateContract is Ownable {
     PARAMS
      ****************************************/
 
-  /**
-    Mêttre a jour l'addresse de destination du contrat officiel pour que le contrat de délégation puisse y accèder
-     */
   function setaddressHero(address _addressHero) external onlyOwner {
     addressHero = _addressHero;
   }
 
-  /**
-    Mêttre à jour un paramètre du contrat de délégation
-    */
   function setParamsContract(string memory keyParams, uint256 valueParams) external onlyOwner {
     paramsContract[keyParams] = valueParams;
   }
 
-  /**
-    récupérer une valeur du tableau de paramètre du contrat de délégation
-    */
   function getParamsContract(string memory keyParams) external view returns (uint256) {
     return paramsContract[keyParams];
   }
 
-  /**
-    appel vers le contrat officiel du jeton
-    Mêttre a jour un paramètre du contrat officiel depuis le contrat de délégation
-     */
   function setParamsDelegate(string memory keyParams, uint256 valueParams) internal {
     Hero contratHero = Hero(addressHero);
     contratHero.setParamsContract(keyParams, valueParams);
@@ -90,11 +77,9 @@ contract DelegateContract is Ownable {
 
   function getBalanceOfItem(uint256 idItem) external view returns (uint256) {
     Items itemContrat = Items(addressItem);
-    //return itemContrat.balanceOf(msg.sender);
     return itemContrat.balanceOf(msg.sender, idItem);
   }
 
-  //achat d'une ressource contre de l'eth/MATIC
   function farmItem(
     uint256 idItem,
     uint256 amount,
@@ -105,7 +90,6 @@ contract DelegateContract is Ownable {
     MV(addressMVToken).burn(userAddress, 1);
   }
 
-  //achat d'une ressource contre du MV
   function buyItem(
     uint256 idItem,
     uint256 amount,
@@ -117,7 +101,6 @@ contract DelegateContract is Ownable {
     MV(addressMVToken).burn(userAddress, price);
   }
 
-  //Vente du jeton contre du MV
   function sellItem(
     uint256 amount,
     uint256 idItem,
@@ -145,10 +128,6 @@ contract DelegateContract is Ownable {
     HERO
      ****************************************/
 
-  /**
-    appel vers le contrat officiel du jeton
-    Offrir un ou plusieurs token a un utilisateur
-     */
   function giveHero(
     address to,
     string memory _tokenUri,
@@ -162,10 +141,6 @@ contract DelegateContract is Ownable {
     contratHero.mint(to, booleans, randomParts, randomParams, _tokenUri);
   }
 
-  /**
-    appel vers le contrat officiel du jeton
-    Modifier les paramètre d'un token et l'envoyé au contrat de token pour le mêttre a jour
-     */
   function mintHero(
     address userAddress,
     string memory _tokenUri,
@@ -177,12 +152,6 @@ contract DelegateContract is Ownable {
     require(paramsContract["tokenLimit"] > 0, "No remaining");
     paramsContract["nextId"]++;
 
-    //params[0] = stats[0]; //strong
-    //params[1] = stats[1]; //endurance
-    //params[2] = stats[2]; //lucky
-    //params[3] = stats[3]; //speed
-    //params[4] = stats[4]; //dexterity
-    //params[5] = stats[5]; //inteligence
     params[6] = 0; //exp
     params[7] = 1; //level
     params[8] = block.timestamp; //date de création
@@ -194,11 +163,6 @@ contract DelegateContract is Ownable {
     contratHero.mint(userAddress, params, _tokenUri);
   }
 
-  /**
-    Quand l'exp est a fond, luser peut rajouter un point ou il veux
-    Réfléchir a la logique d'exp max, pour l'instant (100+(?**level))
-    Est ce qu'ont rajouterai pas de façon random des points autres part
-    */
   function levelUp(
     address userAddress,
     uint8 statToLvlUp,
@@ -218,10 +182,6 @@ contract DelegateContract is Ownable {
     contratHero.updateToken(tokenTemp, tokenId, userAddress);
   }
 
-  /**
-    appel vers le contrat officiel du jeton
-    transfert d'un token d'un propriétaire a un autre adresse
-     */
   function transferHero(
     address userAddress,
     address contactAddr,
@@ -232,10 +192,6 @@ contract DelegateContract is Ownable {
     contratHero.transfer(contactAddr, userAddress, tokenId);
   }
 
-  /**
-    appel vers le contrat officiel du jeton
-    Achat d'un token par un utilisateur
-     */
   /*function purchase(address contactAddr, uint256 tokenId) external payable {
         Hero contrat = Hero(addressHero);
         Hero.Token memory token = contrat.getTokenDetails(tokenId);
@@ -245,19 +201,11 @@ contract DelegateContract is Ownable {
         contrat.transfer(contactAddr, msg.sender, tokenId);
     }*/
 
-  /**
-    appel vers le contrat officiel du jeton
-    récupérer un tableau d'id des tokens d'un utilisateur
-     */
   function getAllHeroForUser(address userAddress) external view returns (uint256[] memory) {
     Hero contratHero = Hero(addressHero);
     return contratHero.getAllTokensForUser(userAddress);
   }
 
-  /**
-    appel vers le contrat officiel du jeton
-    récupérer les data d'un token avec son id
-     */
   function getHeroDetails(uint256 tokenId) external view returns (Hero.Token memory) {
     Hero contratHero = Hero(addressHero);
     return contratHero.getTokenDetails(tokenId);
@@ -271,34 +219,18 @@ contract DelegateContract is Ownable {
     currentpriceMV = price;
   }
 
-  /**
-    achat d'une ressource contre de l'eth/MATIC
-     */
   function buyMV(uint256 value, address sender) external payable {
     if (currentpriceMV != 0) require(msg.value >= (currentpriceMV * value), "More ETH required");
     if (currentpriceMV == 0) require(msg.value >= (getDynamicPriceMV() * value), "More ETH required");
     MV(addressMVToken).mint(sender, value * (10 ^ 18));
   }
 
-  /**
-    Vente du jeton MV contre du MATIC
-     */
   function sellMV(uint256 value) external {
     require(MV(addressMVToken).totalSupply() > value + 1, "No more this token");
     require(MV(addressMVToken).balanceOf(msg.sender) >= value * (10 ^ 18), "No more this token");
     if (currentpriceMV != 0) payable(msg.sender).transfer(currentpriceMV * value);
     if (currentpriceMV == 0) payable(msg.sender).transfer(getDynamicPriceMV() * value);
     MV(addressMVToken).burn(msg.sender, value * (10 ^ 18));
-  }
-
-  /**
-    Converssion du MV vers un autre token
-     */
-  function convertMVToAnotherToken(uint256 value, address anotherToken) public {
-    /*require(totalSupply()>value+1,"No more this token");
-        require(balanceOf(msg.sender)>=value,"No more this token");
-        _burn(msg.sender,value);
-        currentprice = getDynamicPriceMV();*/
   }
 
   function getDynamicPriceMV() public view returns (uint256) {
@@ -355,5 +287,3 @@ contract DelegateContract is Ownable {
         //randomParams[5] = 0;//difficulté de la quête (détermine l'exp gagné, et les objets % gagné)
         randomParams[6] = paramsContract["nextId"]; //tokenId
         randomParams[7] = generation; //type*/
-
-///toujours utiliser only owner pour que seul ma private key fasse l'appel

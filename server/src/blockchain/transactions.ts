@@ -18,8 +18,6 @@ module.exports = {
     try {
       const contract = instanceContractFunc(contractAddress, signer);
       const gasLimit = await call.estimate(contract, method, params, "");
-      //if(onlyEstimate === true) return gasLimit;
-      //const gasLimit = 1000000
       const tx = await call.call(contract, method, params, "", gasLimit);
       return await tx.wait();
     } catch (error) {

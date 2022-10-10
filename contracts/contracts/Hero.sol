@@ -34,8 +34,9 @@ contract Hero is ERC721URIStorage, Ownable {
 
   ///@notice Retourne un nombre aléatoire jusqu'a un maxNumber défini
   function random(uint8 maxNumber) internal returns (uint8) {
-    uint256 randomnumber = uint256(keccak256(abi.encodePacked(block.timestamp, msg.sender, paramsContract["nonce"]))) %
-      maxNumber;
+    uint256 randomnumber = uint256(
+      keccak256(abi.encodePacked(block.timestamp, msg.sender, paramsContract["nonce"]))
+    ) % maxNumber;
     paramsContract["nonce"]++;
     return uint8(randomnumber);
   }

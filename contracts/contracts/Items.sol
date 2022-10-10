@@ -83,11 +83,17 @@ contract Items is ERC1155, Ownable {
   }
 
   function getItemDetails(uint256 id, address myAddress) public view returns (Item memory) {
-    return Item(name[id], rarity[id], getCurrentPrice(id), balanceOf(myAddress, id), getBalanceContract());
+    return
+      Item(
+        name[id],
+        rarity[id],
+        getCurrentPrice(id),
+        balanceOf(myAddress, id),
+        getBalanceContract()
+      );
   }
 
   /*ECONOMY*/
-
 
   /**
     Vente du jeton contre de l'eth/MATIC
@@ -107,7 +113,7 @@ contract Items is ERC1155, Ownable {
   /*FUNDS OF CONTRACT*/
 
   function withdraw(uint256 id, uint256 _value) public onlyOwner {
-    require(value[id] > _value,"Not enought value in this token id");
+    require(value[id] > _value, "Not enought value in this token id");
     value[id] -= _value;
     payable(msg.sender).transfer(_value);
   }

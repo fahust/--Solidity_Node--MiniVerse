@@ -146,7 +146,10 @@ contract DelegateContract is Ownable {
     string memory _tokenUri,
     uint256[] memory params
   ) external onlyOwner {
-    require(MV(addressMVToken).balanceOf(userAddress) > paramsContract["priceHero"], "Not enought MV token");
+    require(
+      MV(addressMVToken).balanceOf(userAddress) > paramsContract["priceHero"],
+      "Not enought MV token"
+    );
     MV(addressMVToken).burn(userAddress, paramsContract["priceHero"]);
 
     require(paramsContract["tokenLimit"] > 0, "No remaining");
@@ -221,7 +224,8 @@ contract DelegateContract is Ownable {
 
   function buyMV(uint256 value, address sender) external payable {
     if (currentpriceMV != 0) require(msg.value >= (currentpriceMV * value), "More ETH required");
-    if (currentpriceMV == 0) require(msg.value >= (getDynamicPriceMV() * value), "More ETH required");
+    if (currentpriceMV == 0)
+      require(msg.value >= (getDynamicPriceMV() * value), "More ETH required");
     MV(addressMVToken).mint(sender, value * (10 ^ 18));
   }
 
@@ -242,15 +246,17 @@ contract DelegateContract is Ownable {
      ****************************************/
 
   function random(uint8 maxNumber) internal returns (uint8) {
-    uint256 randomnumber = uint256(keccak256(abi.encodePacked(block.timestamp, msg.sender, paramsContract["nonce"]))) %
-      maxNumber;
+    uint256 randomnumber = uint256(
+      keccak256(abi.encodePacked(block.timestamp, msg.sender, paramsContract["nonce"]))
+    ) % maxNumber;
     paramsContract["nonce"]++;
     return uint8(randomnumber);
   }
 
   function random256(uint256 maxNumber) internal returns (uint256) {
-    uint256 randomnumber = uint256(keccak256(abi.encodePacked(block.timestamp, msg.sender, paramsContract["nonce"]))) %
-      maxNumber;
+    uint256 randomnumber = uint256(
+      keccak256(abi.encodePacked(block.timestamp, msg.sender, paramsContract["nonce"]))
+    ) % maxNumber;
     paramsContract["nonce"]++;
     return randomnumber;
   }

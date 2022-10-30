@@ -6,25 +6,36 @@ import cityController from "../city.controller";
 import { ICity } from "~~/models/city.model";
 
 const mongod = new MongoMemoryServer();
+const fakeDataBase = false;
 
 describe("User controller", () => {
   beforeAll(async () => {
-    const uri = await mongod.getUri();
+    if (!fakeDataBase) {
+      await mongoose.connect(process.env.MONGO_URI, {
+        useNewUrlParser: true,
+      });
+    } else {
+      const uri = await mongod.getUri();
 
-    const mongooseOpts = {
-      useNewUrlParser: true,
-      autoReconnect: true,
-      reconnectTries: Number.MAX_VALUE,
-      reconnectInterval: 1000,
-    };
+      const mongooseOpts = {
+        useNewUrlParser: true,
+        autoReconnect: true,
+        reconnectTries: Number.MAX_VALUE,
+        reconnectInterval: 1000,
+      };
 
-    await mongoose.connect(uri, mongooseOpts);
+      await mongoose.connect(uri, mongooseOpts);
+    }
   });
 
   afterAll(async () => {
-    await mongoose.connection.dropDatabase();
-    await mongoose.connection.close();
-    await mongod.stop();
+    if (!fakeDataBase) {
+      mongoose.connection.close();
+    } else {
+      await mongoose.connection.dropDatabase();
+      await mongoose.connection.close();
+      await mongod.stop();
+    }
   });
 
   it("Should create a people", async () => {
@@ -67,6 +78,8 @@ describe("User controller", () => {
       peoples[0]._id!,
       cityCreated._id
     );
+
+    console.log(peoples);
 
     expect(entered?.city).toEqual(cityCreated._id);
   });

@@ -19,3 +19,13 @@ export enum Race {
   DRAGON = "dragon",
   ANGEL = "angel",
 }
+
+export enum Stats {
+  HEALTH = "health",
+  STRONG = "strong",
+  INTELIGENCE = "inteligence",
+  ENDURENCE = "endurence",
+  DEXTERITY = "dexterity",
+}
+
+//JOB

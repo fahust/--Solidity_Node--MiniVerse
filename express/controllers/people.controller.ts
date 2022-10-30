@@ -9,6 +9,14 @@ async function findById(id: string): Promise<IPeople | null> {
   return People.findById(id);
 }
 
+async function findOne(options: any): Promise<IPeople | null> {
+  return People.findOne(options);
+}
+
+async function find(options: any): Promise<IPeople[]> {
+  return People.find(options);
+}
+
 function randomGender(): string {
   const values = Object.keys(Gender);
   const enumKey = values[Math.floor(Math.random() * values.length)];
@@ -26,6 +34,8 @@ function randomIntFromInterval(min: number, max: number) {
 export default {
   create,
   findById,
+  findOne,
+  find,
   randomGender,
   randomAge,
 };

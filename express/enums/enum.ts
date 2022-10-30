@@ -28,4 +28,9 @@ export enum Stats {
   DEXTERITY = "dexterity",
 }
 
-//JOB
+export enum Job {
+  SMITHY = "smithy",
+  FISHER = "fisher",
+  HARVEST = "harvest",
+  MINER = "miner",
+}

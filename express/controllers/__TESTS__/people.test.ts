@@ -117,10 +117,13 @@ describe("User controller", () => {
 
   it("Should gain experience a people", async () => {
     const peoples = await peopleController.find({}, 0, 1);
-    const job = randomEnum(Job);
+    const job = randomEnum(Job) as Job;
     const peopleUpdated = await peopleController.increaseJobExperience(
       peoples[0]._id!,
       job
+    );
+    expect(peopleUpdated.jobExperience[job]).toEqual(
+      peoples[0].jobExperience[job] + 1
     );
   });
 });

@@ -1,4 +1,4 @@
-import { Gender, Job, Race, Stats } from "../enums/enum";
+import { Gender, Item, Job, Race, Stats } from "../enums/enum";
 import People, { IPeople } from "../models/people.model";
 import { nameByRace } from "fantasy-name-generator";
 import mongoose from "mongoose";
@@ -8,12 +8,12 @@ function generatePeople(): IPeople {
   const race = randomEnum(Race);
   const gender = randomEnum(Gender);
 
-  const jobExperience = {} as Record<string, number>;
-  const keys = Object.keys(Job).filter(
+  const jobsExperience = {} as Record<string, number>;
+  const jobKeys = Object.keys(Job).filter(
     (k) => !(Math.abs(Number.parseInt(k)) + 1)
   );
-  keys.forEach((_, i) => {
-    jobExperience[keys[i]] = 0;
+  jobKeys.forEach((_, i) => {
+    jobsExperience[jobKeys[i]] = 0;
   });
 
   return {
@@ -23,12 +23,26 @@ function generatePeople(): IPeople {
     job: randomEnum(Job),
     city: mongoose.Types.ObjectId(),
     race: race,
-    jobExperience,
+    jobsExperience,
   } as IPeople;
 }
 
-//harvest gained with job
-//experience increase job
+function increaseItem(idPeople: string, item: Item) {
+  const itemKey = "items." + item;
+  console.log(itemKey)
+  return People.findByIdAndUpdate(
+    idPeople,
+    {
+      $inc: {
+        [itemKey]: 1,
+      },
+    },
+    {
+      new: true,
+      upsert: true,
+    }
+  );
+}
 
 function changeJob(idPeople: string, job: Job) {
   return People.findByIdAndUpdate(
@@ -45,7 +59,7 @@ function changeJob(idPeople: string, job: Job) {
 }
 
 function increaseJobExperience(idPeople: string, job: Job) {
-  const jobKey = "jobExperience." + job;
+  const jobKey = "jobsExperience." + job;
   return People.findByIdAndUpdate(
     idPeople,
     {
@@ -59,8 +73,6 @@ function increaseJobExperience(idPeople: string, job: Job) {
     }
   );
 }
-
-//increase exp job,
 
 async function enterInCity(idPeople: string, idCity: string) {
   return People.findByIdAndUpdate(
@@ -134,6 +146,7 @@ export default {
   enterInCity,
   increaseExperience,
   increaseJobExperience,
+  increaseItem,
   levelUp,
   create,
   insertMany,

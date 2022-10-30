@@ -34,3 +34,11 @@ export enum Job {
   HARVEST = "HARVEST",
   MINER = "MINER",
 }
+
+export enum Item {
+  WOOD = "WOOD",
+  IRON = "IRON",
+  FISH = "FISH",
+  FOOD = "FOOD",
+  STONE = "STONE",
+}

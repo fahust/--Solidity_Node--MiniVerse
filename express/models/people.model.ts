@@ -9,6 +9,7 @@ export interface IPeople extends Document {
   age: number;
   gender: Gender;
   job: Job;
+  jobExperience: Record<Job, number>;
   race: Race;
   level: number;
   experience: number;
@@ -25,6 +26,7 @@ const PeopleSchema: Schema = new Schema({
   age: { type: Number, required: true, default: 0 },
   gender: { type: String, enum: Object.values(Gender), required: true },
   job: { type: String, enum: Object.values(Job), required: true },
+  jobExperience: { type: Schema.Types.Mixed, required: true, default: {} },
   race: { type: String, enum: Object.values(Race), required: true },
   level: { type: Number, required: true, default: 1 },
   experience: { type: Number, required: true, default: 0 },

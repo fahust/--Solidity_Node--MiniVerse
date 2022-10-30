@@ -8,6 +8,14 @@ function generatePeople(): IPeople {
   const race = randomEnum(Race);
   const gender = randomEnum(Gender);
 
+  const jobExperience = {} as Record<string, number>;
+  const keys = Object.keys(Job).filter(
+    (k) => !(Math.abs(Number.parseInt(k)) + 1)
+  );
+  keys.forEach((_, i) => {
+    jobExperience[keys[i]] = 0;
+  });
+
   return {
     name: randomeName(race, gender),
     age: randomAge(),
@@ -15,6 +23,7 @@ function generatePeople(): IPeople {
     job: randomEnum(Job),
     city: mongoose.Types.ObjectId(),
     race: race,
+    jobExperience,
   } as IPeople;
 }
 
@@ -28,6 +37,21 @@ function changeJob(idPeople: string, job: Job) {
     },
     {
       new: true,
+    }
+  );
+}
+
+function increaseJobExperience(idPeople: string, job: Job) {
+  return People.findByIdAndUpdate(
+    idPeople,
+    {
+      $set: {
+        [job + "-experience"]: job,
+      },
+    },
+    {
+      new: true,
+      upsert: true,
     }
   );
 }
@@ -105,6 +129,7 @@ export default {
   changeJob,
   enterInCity,
   increaseExperience,
+  increaseJobExperience,
   levelUp,
   create,
   insertMany,

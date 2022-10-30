@@ -1,4 +1,4 @@
-import { Gender, Race } from "../enums/enum";
+import { Gender, Race, Stats } from "../enums/enum";
 import People, { IPeople } from "../models/people.model";
 import { nameByRace } from "fantasy-name-generator";
 import mongoose from "mongoose";
@@ -31,7 +31,14 @@ async function enterInCity(idPeople: string, idCity: string) {
   );
 }
 
-//level up
+async function levelUp(idPeople: string) {
+  const increaseStat = randomEnum(Stats);
+  return People.findByIdAndUpdate(
+    idPeople,
+    { $inc: { [increaseStat]: 1 } },
+    { new: true, upsert: true }
+  );
+}
 
 async function create(people: IPeople): Promise<IPeople> {
   return People.create(people);
@@ -76,6 +83,7 @@ function randomeName(race: Race, gender: Gender) {
 export default {
   generatePeople,
   enterInCity,
+  levelUp,
   create,
   insertMany,
   findById,

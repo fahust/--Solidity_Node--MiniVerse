@@ -2,7 +2,7 @@ import { Gender, Race, Stats } from "../enums/enum";
 import People, { IPeople } from "../models/people.model";
 import { nameByRace } from "fantasy-name-generator";
 import mongoose from "mongoose";
-import cityModel from "../models/city.model";
+import { randomIntFromInterval } from "../helper/utils.helper";
 
 function generatePeople(): IPeople {
   const race = randomEnum(Race);
@@ -31,11 +31,22 @@ async function enterInCity(idPeople: string, idCity: string) {
   );
 }
 
+async function increaseExperience(idPeople: string, experience: number) {
+  const peopleUpdated = await People.findByIdAndUpdate(
+    idPeople,
+    { $inc: { experience: experience } },
+    { new: true, upsert: true }
+  );
+  if (peopleUpdated.experience > maxExperience(peopleUpdated))
+    return levelUp(peopleUpdated._id!);
+  return peopleUpdated;
+}
+
 async function levelUp(idPeople: string) {
   const increaseStat = randomEnum(Stats);
   return People.findByIdAndUpdate(
     idPeople,
-    { $inc: { [increaseStat]: 1 } },
+    { $set: { experience: 0 }, $inc: { [increaseStat]: 1, level: 1 } },
     { new: true, upsert: true }
   );
 }
@@ -72,8 +83,8 @@ function randomAge(): number {
   return randomIntFromInterval(1, 100);
 }
 
-function randomIntFromInterval(min: number, max: number) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
+function maxExperience(people: IPeople) {
+  return 100 + people.level * people.level;
 }
 
 function randomeName(race: Race, gender: Gender) {
@@ -83,6 +94,7 @@ function randomeName(race: Race, gender: Gender) {
 export default {
   generatePeople,
   enterInCity,
+  increaseExperience,
   levelUp,
   create,
   insertMany,

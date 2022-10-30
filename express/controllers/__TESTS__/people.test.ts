@@ -4,9 +4,10 @@ import { IPeople } from "../../models/people.model";
 import peopleController from "../people.controller";
 import cityController from "../city.controller";
 import { ICity } from "~~/models/city.model";
+import { randomIntFromInterval } from "../../helper/utils.helper";
 
 const mongod = new MongoMemoryServer();
-const fakeDataBase = false;
+const fakeDataBase = true;
 
 describe("User controller", () => {
   beforeAll(async () => {
@@ -86,6 +87,20 @@ describe("User controller", () => {
     const peoples = await peopleController.find({});
 
     const peopleUpdated = await peopleController.levelUp(peoples[0]._id!);
-    console.log(peopleUpdated)
+  });
+
+  it("Should gain experience a people", async () => {
+    const peoples = await peopleController.find({});
+    let peopleUpdated = peoples[0];
+    for (let index = 0; index < 100; index++) {
+      peopleUpdated = await peopleController.increaseExperience(
+        peoples[0]._id!,
+        randomIntFromInterval(1, 100)
+      );
+    }
+    expect(peopleUpdated.level).toBeGreaterThan(1);
+    expect(peopleUpdated.health).toBeGreaterThan(1);
+    expect(peopleUpdated.endurence).toBeGreaterThan(1);
+    expect(peopleUpdated.dexterity).toBeGreaterThan(1);
   });
 });

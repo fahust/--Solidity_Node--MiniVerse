@@ -17,17 +17,8 @@ export default (app: expressWs.Router) => {
   });
 
   app.post("/api/user", async (req, res) => {
-    const user: IUser = await UserController.CreateUser({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      email: req.body.email,
-    });
+    const user: IUser = await UserController.createUser(req.body.user);
 
-    const pet = await PeopleController.CreatePeople({
-      owner: user._id,
-      name: req.body.petName,
-    });
-
-    return res.send({ user, pet });
+    return res.send({ user });
   });
 };

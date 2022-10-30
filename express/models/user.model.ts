@@ -1,10 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
-
-export enum Gender {
-  male = "male",
-  female = "female",
-  undisclosed = "undisclosed",
-}
+import { Gender } from "../enums/enum";
 
 export interface Address extends Document {
   street: string;

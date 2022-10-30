@@ -1,18 +1,13 @@
-import Pet, { IPet } from "../models/city.model";
-import { IUser } from "../models/user.model";
+import People, { IPeople } from "../models/people.model";
 
-interface ICreatePetInput {
-  owner: IUser["_id"];
-  name: IPet["name"];
+async function createPeople(people: IPeople): Promise<IPeople> {
+  return People.create(people);
 }
 
-async function CreatePet({ owner, name }: ICreatePetInput): Promise<IPet> {
-  return Pet.create({
-    owner,
-    name,
-  });
+async function findPeople(people: IPeople): Promise<IPeople> {
+  return People.create(people);
 }
 
 export default {
-  CreatePet,
+  createPeople,
 };

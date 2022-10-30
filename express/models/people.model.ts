@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
-import { Gender } from "../enums/enum";
+import { Gender, Race } from "../enums/enum";
 import { ICity } from "./city.model";
 
 export interface IPeople extends Document {
@@ -8,6 +8,7 @@ export interface IPeople extends Document {
   city?: ICity["_id"];
   age: number;
   gender: Gender;
+  race: Race;
 }
 
 const PeopleSchema: Schema = new Schema({
@@ -15,6 +16,7 @@ const PeopleSchema: Schema = new Schema({
   city: { type: Schema.Types.ObjectId, required: false },
   age: { type: Number, required: true, default: 0 },
   gender: { type: String, enum: Object.values(Gender), required: true },
+  race: { type: String, enum: Object.values(Race), required: true },
 });
 
 export default mongoose.model<IPeople>("People", PeopleSchema);

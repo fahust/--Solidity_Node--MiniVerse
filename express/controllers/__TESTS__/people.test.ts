@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 const { MongoMemoryServer } = require("mongodb-memory-server");
+import { Gender, Race } from "../../enums/enum";
 import { IPeople } from "../../models/people.model";
 import Controller from "../people.controller";
 
 const mongod = new MongoMemoryServer();
 
 describe("User controller", () => {
-  const ENV = process.env;
   beforeAll(async () => {
     const uri = await mongod.getUri();
 
@@ -27,10 +27,14 @@ describe("User controller", () => {
   });
 
   it("Should create a people", async () => {
+    const race = Controller.randomEnum(Race);
+    const gender = Controller.randomEnum(Gender);
+
     const people = {
-      name: "test",
+      name: Controller.randomeName(race, gender),
       age: Controller.randomAge(),
-      gender: Controller.randomGender(),
+      gender: Controller.randomEnum(Gender),
+      race: race,
     } as IPeople;
 
     const peopleCreated = await Controller.create(people);

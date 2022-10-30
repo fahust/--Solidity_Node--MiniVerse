@@ -8,7 +8,7 @@ export interface ICity extends Document {
 
 const CitySchema: Schema = new Schema({
   name: { type: String, required: true },
-  peoples: { type: [Schema.Types.ObjectId], required: true },
+  peoples: { type: [Schema.Types.ObjectId], required: false },
 });
 
 export default mongoose.model<ICity>("City", CitySchema);

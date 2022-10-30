@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
 const { MongoMemoryServer } = require("mongodb-memory-server");
-import { Gender, Race } from "../../enums/enum";
 import { IPeople } from "../../models/people.model";
-import Controller from "../people.controller";
+import peopleController from "../people.controller";
+import cityController from "../city.controller";
+import { ICity } from "~~/models/city.model";
 
 const mongod = new MongoMemoryServer();
 
@@ -27,31 +28,46 @@ describe("User controller", () => {
   });
 
   it("Should create a people", async () => {
-    const people = Controller.generatePeople();
+    const people = peopleController.generatePeople();
 
-    const peopleCreated = await Controller.create(people);
+    const peopleCreated = await peopleController.create(people);
     expect(peopleCreated.name).toEqual(people.name);
     expect(peopleCreated.age).toEqual(people.age);
     expect(peopleCreated.gender).toEqual(people.gender);
   });
 
   it("find all people", async () => {
-    const peopleCreated = await Controller.find({});
+    const peopleCreated = await peopleController.find({});
     expect(peopleCreated.length).toBeGreaterThan(0);
   });
 
   it("Should create many peoples", async () => {
     const peoples: IPeople[] = [];
     for (let index = 0; index < 999; index++) {
-      peoples.push(Controller.generatePeople());
+      peoples.push(peopleController.generatePeople());
     }
 
-    const peoplesCreated = await Controller.insertMany(peoples);
-    
+    const peoplesCreated = await peopleController.insertMany(peoples);
+
     peoplesCreated.forEach((people, index) => {
       expect(peoples[index].name).toEqual(people.name);
       expect(peoples[index].age).toEqual(people.age);
       expect(peoples[index].gender).toEqual(people.gender);
     });
+  });
+
+  it("Should create a city", async () => {
+    const cityCreated = await cityController.create({
+      name: "test",
+    } as ICity);
+
+    const peoples = await peopleController.find({});
+
+    const entered = await peopleController.enterInCity(
+      peoples[0]._id!,
+      cityCreated._id
+    );
+
+    expect(entered?.city).toEqual(cityCreated._id);
   });
 });

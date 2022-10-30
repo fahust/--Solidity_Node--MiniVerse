@@ -3,8 +3,9 @@ const { MongoMemoryServer } = require("mongodb-memory-server");
 import { IPeople } from "../../models/people.model";
 import peopleController from "../people.controller";
 import cityController from "../city.controller";
-import { ICity } from "~~/models/city.model";
-import { randomIntFromInterval } from "../../helper/utils.helper";
+import { ICity } from "../../models/city.model";
+import { randomEnum, randomIntFromInterval } from "../../helper/utils.helper";
+import { Job } from "../../enums/enum";
 
 const mongod = new MongoMemoryServer();
 const fakeDataBase = true;
@@ -73,7 +74,7 @@ describe("User controller", () => {
       name: "test",
     } as ICity);
 
-    const peoples = await peopleController.find({});
+    const peoples = await peopleController.find({}, 0, 1);
 
     const entered = await peopleController.enterInCity(
       peoples[0]._id!,
@@ -84,13 +85,13 @@ describe("User controller", () => {
   });
 
   it("Should level up a people", async () => {
-    const peoples = await peopleController.find({});
+    const peoples = await peopleController.find({}, 0, 1);
 
     const peopleUpdated = await peopleController.levelUp(peoples[0]._id!);
   });
 
   it("Should gain experience a people", async () => {
-    const peoples = await peopleController.find({});
+    const peoples = await peopleController.find({}, 0, 1);
     let peopleUpdated = peoples[0];
     for (let index = 0; index < 100; index++) {
       peopleUpdated = await peopleController.increaseExperience(
@@ -102,5 +103,15 @@ describe("User controller", () => {
     expect(peopleUpdated.health).toBeGreaterThan(1);
     expect(peopleUpdated.endurence).toBeGreaterThan(1);
     expect(peopleUpdated.dexterity).toBeGreaterThan(1);
+  });
+
+  it("Should change job of people", async () => {
+    const peoples = await peopleController.find({}, 0, 1);
+    const newJob = randomEnum(Job);
+    const peopleUpdated = await peopleController.changeJob(
+      peoples[0]._id!,
+      newJob
+    );
+    expect(peopleUpdated?.job).toEqual(newJob);
   });
 });

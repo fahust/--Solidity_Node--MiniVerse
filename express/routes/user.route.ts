@@ -18,7 +18,6 @@ export default (app: expressWs.Router) => {
 
   app.post("/api/user", async (req, res) => {
     const user: IUser = await UserController.createUser(req.body.user);
-
     return res.send({ user });
   });
 };

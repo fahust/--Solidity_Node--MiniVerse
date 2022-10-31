@@ -33,6 +33,7 @@ export enum Job {
   FISHER = "FISHER",
   HARVEST = "HARVEST",
   MINER = "MINER",
+  LUMBERJACK = "LUMBERJACK",
 }
 
 export enum Item {
@@ -43,4 +44,8 @@ export enum Item {
   STONE = "STONE",
   SHIELD = "SHIELD",
   MUSHROOM = "MUSHROOM",
+  BOARD = "BOARD",
+  BRICK = "BRICK",
+  METAL = "METAL",
+  COPPER = "COPPER",
 }

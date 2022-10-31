@@ -4,7 +4,7 @@ import { nameByRace } from "fantasy-name-generator";
 import mongoose from "mongoose";
 import { randomEnum, randomIntFromInterval } from "../helper/utils.helper";
 import cityModel from "../models/city.model";
-import { itemsJobs } from "../models/constant/contant";
+import { itemsJobs } from "../constant/job.constant";
 
 function generatePeople(): IPeople {
   const race = randomEnum(Race);

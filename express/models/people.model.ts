@@ -24,19 +24,19 @@ export interface IPeople extends Document {
 const PeopleSchema: Schema = new Schema({
   name: { type: String, required: true },
   city: { type: Schema.Types.ObjectId, required: true, ref: "City" },
-  age: { type: Number, required: true, default: 0 },
+  age: { type: Number, required: true, default: 0, min: 0, max: 200 },
   gender: { type: String, enum: Object.values(Gender), required: true },
   job: { type: String, enum: Object.values(Job), required: true },
   jobsExperience: { type: Schema.Types.Mixed, required: true, default: {} },
   items: { type: Schema.Types.Mixed, required: true, default: {} },
   race: { type: String, enum: Object.values(Race), required: true },
-  level: { type: Number, required: true, default: 1 },
+  level: { type: Number, required: true, default: 1, min: 1, max: 200 },
   experience: { type: Number, required: true, default: 0 },
-  health: { type: Number, required: true, default: 1 },
-  strong: { type: Number, required: true, default: 1 },
-  inteligence: { type: Number, required: true, default: 1 },
-  endurence: { type: Number, required: true, default: 1 },
-  dexterity: { type: Number, required: true, default: 1 },
+  health: { type: Number, required: true, default: 1, min: 1, max: 200 },
+  strong: { type: Number, required: true, default: 1, min: 1, max: 200 },
+  inteligence: { type: Number, required: true, default: 1, min: 1, max: 200 },
+  endurence: { type: Number, required: true, default: 1, min: 1, max: 200 },
+  dexterity: { type: Number, required: true, default: 1, min: 1, max: 200 },
 });
 
 export default mongoose.model<IPeople>("People", PeopleSchema);

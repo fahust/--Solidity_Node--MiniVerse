@@ -49,3 +49,26 @@ export enum Item {
   METAL = "METAL",
   COPPER = "COPPER",
 }
+
+export enum Building {
+  HOUSE = "House",
+  STONEWORKS = "StoneWorks",
+  LUMBERMILL = "Lumbermill",
+  SAWMILL = "Sawmill",
+  FARM = "Farm",
+  WATER_STATION = "Water Station",
+  MINING_STATION = "Mining Station",
+  STORE = "Store",
+  HUNTING_HOUSE = "Hunting House",
+  CHURCH = "Church",
+  SCHOOL = "School",
+  WEAVING = "Weaving",
+  FURNACE = "Furnace",
+  BAR = "Bar",
+  RESTAURANT = "Restaurant",
+  MEDICAL = "Medical",
+  WORKSHOP = "Workshop",
+  FACTORY = "Factory",
+  BARRACKS = "Barracks",
+  ARMORY = "Armory",
+}

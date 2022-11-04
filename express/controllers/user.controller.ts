@@ -1,6 +1,6 @@
 import User, { IUser } from "../models/user.model";
 
-async function CreateUser({
+async function createUser({
   email,
   firstName,
   lastName,
@@ -17,5 +17,5 @@ async function CreateUser({
 }
 
 export default {
-  CreateUser,
+  createUser,
 };

@@ -1,14 +1,14 @@
-import mongoose, { Schema, Document } from 'mongoose';
-import { IUser } from './user.model';
+import mongoose, { Schema, Document } from "mongoose";
+import { IPeople } from "./people.model";
 
-export interface IPet extends Document {
+export interface ICity extends Document {
   name: string;
-  owner: IUser['_id'];
+  peoples: [IPeople["_id"]];
 }
 
-const PetSchema: Schema = new Schema({
+const CitySchema: Schema = new Schema({
   name: { type: String, required: true },
-  owner: { type: Schema.Types.ObjectId, required: true }
+  peoples: { type: [Schema.Types.ObjectId], required: true },
 });
 
-export default mongoose.model<IPet>('Pet', PetSchema);
+export default mongoose.model<ICity>("City", CitySchema);

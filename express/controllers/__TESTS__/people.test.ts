@@ -27,15 +27,7 @@ describe("User controller", () => {
   });
 
   it("Should create a people", async () => {
-    const race = Controller.randomEnum(Race);
-    const gender = Controller.randomEnum(Gender);
-
-    const people = {
-      name: Controller.randomeName(race, gender),
-      age: Controller.randomAge(),
-      gender: Controller.randomEnum(Gender),
-      race: race,
-    } as IPeople;
+    const people = Controller.generatePeople();
 
     const peopleCreated = await Controller.create(people);
     expect(peopleCreated.name).toEqual(people.name);
@@ -46,5 +38,20 @@ describe("User controller", () => {
   it("find all people", async () => {
     const peopleCreated = await Controller.find({});
     expect(peopleCreated.length).toBeGreaterThan(0);
+  });
+
+  it("Should create many peoples", async () => {
+    const peoples: IPeople[] = [];
+    for (let index = 0; index < 999; index++) {
+      peoples.push(Controller.generatePeople());
+    }
+
+    const peoplesCreated = await Controller.insertMany(peoples);
+    
+    peoplesCreated.forEach((people, index) => {
+      expect(peoples[index].name).toEqual(people.name);
+      expect(peoples[index].age).toEqual(people.age);
+      expect(peoples[index].gender).toEqual(people.gender);
+    });
   });
 });

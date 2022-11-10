@@ -2,6 +2,18 @@ import { Gender, Race } from "../enums/enum";
 import People, { IPeople } from "../models/people.model";
 import { nameByRace } from "fantasy-name-generator";
 
+function generatePeople(): IPeople {
+  const race = randomEnum(Race);
+  const gender = randomEnum(Gender);
+
+  return {
+    name: randomeName(race, gender),
+    age: randomAge(),
+    gender: randomEnum(Gender),
+    race: race,
+  } as IPeople;
+}
+
 async function create(people: IPeople): Promise<IPeople> {
   return People.create(people);
 }
@@ -43,6 +55,7 @@ function randomeName(race: Race, gender: Gender) {
 }
 
 export default {
+  generatePeople,
   create,
   insertMany,
   findById,

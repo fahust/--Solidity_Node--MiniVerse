@@ -29,8 +29,8 @@ export enum Stats {
 }
 
 export enum Job {
-  SMITHY = "smithy",
-  FISHER = "fisher",
-  HARVEST = "harvest",
-  MINER = "miner",
+  SMITHY = "SMITHY",
+  FISHER = "FISHER",
+  HARVEST = "HARVEST",
+  MINER = "MINER",
 }

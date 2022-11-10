@@ -8,7 +8,7 @@ import { randomEnum, randomIntFromInterval } from "../../helper/utils.helper";
 import { Job } from "../../enums/enum";
 
 const mongod = new MongoMemoryServer();
-const fakeDataBase = true;
+const fakeDataBase = false;
 
 describe("User controller", () => {
   beforeAll(async () => {
@@ -113,5 +113,14 @@ describe("User controller", () => {
       newJob
     );
     expect(peopleUpdated?.job).toEqual(newJob);
+  });
+
+  it("Should gain experience a people", async () => {
+    const peoples = await peopleController.find({}, 0, 1);
+    const job = randomEnum(Job);
+    const peopleUpdated = await peopleController.increaseJobExperience(
+      peoples[0]._id!,
+      job
+    );
   });
 });

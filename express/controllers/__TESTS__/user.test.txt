@@ -1,40 +1,57 @@
-import mongoose from 'mongoose';
-import Controller from '../user.controller';
+const mongoose = require("mongoose");
+const { MongoMemoryServer } = require("mongodb-memory-server");
+import Controller from "../user.controller";
 
-describe('User controller', () => {
+const mongod = new MongoMemoryServer();
+const fakeDataBase = true;
+
+describe("User controller", () => {
   beforeAll(async () => {
-    await mongoose.connect(global.__MONGO_URI__, {
-      useNewUrlParser: true
-    });
+    if (!fakeDataBase) {
+      await mongoose.connect(process.env.MONGO_URI, {
+        useNewUrlParser: true,
+      });
+    } else {
+      const uri = await mongod.getUri();
+
+      const mongooseOpts = {
+        useNewUrlParser: true,
+        autoReconnect: true,
+        reconnectTries: Number.MAX_VALUE,
+        reconnectInterval: 1000,
+      };
+
+      await mongoose.connect(uri, mongooseOpts);
+    }
   });
 
   afterAll(async () => {
     mongoose.connection.close();
   });
-  it('Should create a user', async () => {
-    const email = 'text@example.com';
+  it("Should create a user", async () => {
+    const email = "text@example.com";
 
-    const user = await Controller.CreateUser({
+    const user = await Controller.createUser({
       email,
-      firstName: 'Test first name',
-      lastName: 'Test last name'
+      firstName: "Test first name",
+      lastName: "Test last name",
     });
 
     expect(user.email).toEqual(email);
   });
 
-  it('Should enforce the gender ennum', async () => {
+  it("Should enforce the gender ennum", async () => {
     try {
-      await Controller.CreateUser({
-        email: 'text@example.com',
-        firstName: 'Test first name',
-        lastName: 'Test last name',
+      await Controller.createUser({
+        email: "text@example.com",
+        firstName: "Test first name",
+        lastName: "Test last name",
         // @ts-ignore
-        gender: 'not a gender'
+        gender: "not a gender",
       });
-    } catch (e) {
+    } catch (e: any) {
       expect(e.message).toBe(
-        'User validation failed: gender: `not a gender` is not a valid enum value for path `gender`.'
+        "User validation failed: gender: `not a gender` is not a valid enum value for path `gender`."
       );
     }
   });

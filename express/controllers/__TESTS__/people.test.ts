@@ -7,14 +7,17 @@ import { ICity } from "../../models/city.model";
 import { randomEnum, randomIntFromInterval } from "../../helper/utils.helper";
 import { Item, Job } from "../../enums/enum";
 
+const countPeople = 100;
 const mongod = new MongoMemoryServer();
-const fakeDataBase = false;
+const fakeDataBase = true;
 
 describe("User controller", () => {
   beforeAll(async () => {
     if (!fakeDataBase) {
       await mongoose.connect(process.env.MONGO_URI, {
         useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useFindAndModify: false,
       });
     } else {
       const uri = await mongod.getUri();
@@ -24,6 +27,8 @@ describe("User controller", () => {
         autoReconnect: true,
         reconnectTries: Number.MAX_VALUE,
         reconnectInterval: 1000,
+        useUnifiedTopology: true,
+        useFindAndModify: false,
       };
 
       await mongoose.connect(uri, mongooseOpts);
@@ -56,7 +61,7 @@ describe("User controller", () => {
 
   it("Should create many peoples", async () => {
     const peoples: IPeople[] = [];
-    for (let index = 0; index < 999; index++) {
+    for (let index = 0; index < countPeople - 1; index++) {
       peoples.push(peopleController.generatePeople());
     }
 
@@ -95,7 +100,7 @@ describe("User controller", () => {
   it("Should gain experience a people", async () => {
     const peoples = await peopleController.find({}, 0, 1);
     let peopleUpdated = peoples[0];
-    for (let index = 0; index < 1000; index++) {
+    for (let index = 0; index < countPeople; index++) {
       peopleUpdated = await peopleController.increaseExperience(
         peoples[0]._id!,
         randomIntFromInterval(10, 100)

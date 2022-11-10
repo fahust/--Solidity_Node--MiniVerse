@@ -27,6 +27,9 @@ function generatePeople(): IPeople {
   } as IPeople;
 }
 
+//harvest gained with job
+//experience increase job
+
 function changeJob(idPeople: string, job: Job) {
   return People.findByIdAndUpdate(
     idPeople,
@@ -42,11 +45,12 @@ function changeJob(idPeople: string, job: Job) {
 }
 
 function increaseJobExperience(idPeople: string, job: Job) {
+  const jobKey = "jobExperience." + job;
   return People.findByIdAndUpdate(
     idPeople,
     {
-      $set: {
-        [job + "-experience"]: job,
+      $inc: {
+        [jobKey]: 1,
       },
     },
     {

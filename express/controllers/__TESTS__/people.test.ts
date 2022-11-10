@@ -5,7 +5,7 @@ import peopleController from "../people.controller";
 import cityController from "../city.controller";
 import { ICity } from "../../models/city.model";
 import { randomEnum, randomIntFromInterval } from "../../helper/utils.helper";
-import { Job } from "../../enums/enum";
+import { Item, Job } from "../../enums/enum";
 
 const mongod = new MongoMemoryServer();
 const fakeDataBase = false;
@@ -122,8 +122,22 @@ describe("User controller", () => {
       peoples[0]._id!,
       job
     );
-    expect(peopleUpdated.jobExperience[job]).toEqual(
-      peoples[0].jobExperience[job] + 1
+    expect(peopleUpdated.jobsExperience[job]).toEqual(
+      peoples[0].jobsExperience[job] + 1
     );
+  });
+
+  it("Should gain item", async () => {
+    const peoples = await peopleController.find({}, 0, 1);
+    const item = randomEnum(Item) as Item;
+    const peopleUpdated = await peopleController.increaseItem(
+      peoples[0]._id!,
+      item
+    );
+
+    const itemExpected = peoples[0].items[item]
+      ? peoples[0].items[item] + 1
+      : 1;
+    expect(peopleUpdated.items[item]).toEqual(itemExpected);
   });
 });

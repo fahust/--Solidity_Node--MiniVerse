@@ -3,6 +3,7 @@ import People, { IPeople } from "../models/people.model";
 import { nameByRace } from "fantasy-name-generator";
 import mongoose from "mongoose";
 import { randomEnum, randomIntFromInterval } from "../helper/utils.helper";
+import cityModel from "../models/city.model";
 
 function generatePeople(): IPeople {
   const race = randomEnum(Race);
@@ -29,13 +30,34 @@ function generatePeople(): IPeople {
 
 function increaseItem(idPeople: string, item: Item) {
   const itemKey = "items." + item;
-  console.log(itemKey)
   return People.findByIdAndUpdate(
     idPeople,
     {
       $inc: {
         [itemKey]: 1,
       },
+    },
+    {
+      new: true,
+      upsert: true,
+    }
+  );
+}
+
+async function putItemInCity(idPeople: string) {
+  const people = await People.findByIdAndUpdate(idPeople, {
+    $set: { items: {} },
+  });
+
+  const items = {} as Record<string, number>;
+  Object.keys(people!.items).forEach((item) => {
+    items["items." + item] = people!.items[item as Item];
+  });
+
+  await cityModel.findByIdAndUpdate(
+    people?.city,
+    {
+      $inc: items,
     },
     {
       new: true,
@@ -147,6 +169,7 @@ export default {
   increaseExperience,
   increaseJobExperience,
   increaseItem,
+  putItemInCity,
   levelUp,
   create,
   insertMany,

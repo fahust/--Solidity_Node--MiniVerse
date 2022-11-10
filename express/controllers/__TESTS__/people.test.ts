@@ -140,4 +140,13 @@ describe("User controller", () => {
       : 1;
     expect(peopleUpdated.items[item]).toEqual(itemExpected);
   });
+
+  it("Should put item into city", async () => {
+    const peoples = await peopleController.find({}, 0, 1);
+    const peopleUpdated = await peopleController.putItemInCity(
+      peoples[0]._id!
+    );
+    console.log(peopleUpdated)
+  });
+
 });

@@ -1,8 +1,13 @@
-import { Gender } from "../enums/enum";
+import { Gender, Race } from "../enums/enum";
 import People, { IPeople } from "../models/people.model";
+import { nameByRace } from "fantasy-name-generator";
 
 async function create(people: IPeople): Promise<IPeople> {
   return People.create(people);
+}
+
+async function insertMany(peoples: IPeople[]): Promise<IPeople[]> {
+  return People.insertMany(peoples);
 }
 
 async function findById(id: string): Promise<IPeople | null> {
@@ -17,10 +22,12 @@ async function find(options: any): Promise<IPeople[]> {
   return People.find(options);
 }
 
-function randomGender(): string {
-  const values = Object.keys(Gender);
-  const enumKey = values[Math.floor(Math.random() * values.length)];
-  return enumKey;
+function randomEnum<T>(enumeration: any) {
+  const keys = Object.keys(enumeration).filter(
+    (k) => !(Math.abs(Number.parseInt(k)) + 1)
+  );
+  const enumKey = keys[Math.floor(Math.random() * keys.length)];
+  return enumeration[enumKey];
 }
 
 function randomAge(): number {
@@ -31,11 +38,17 @@ function randomIntFromInterval(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+function randomeName(race: Race, gender: Gender) {
+  return nameByRace(race, { gender });
+}
+
 export default {
   create,
+  insertMany,
   findById,
   findOne,
   find,
-  randomGender,
+  randomEnum,
   randomAge,
+  randomeName,
 };

@@ -9,6 +9,11 @@ export interface IPeople extends Document {
   age: number;
   gender: Gender;
   race: Race;
+  health: number;
+  strong: number;
+  inteligence: number;
+  endurence: number;
+  dexterity: number;
 }
 
 const PeopleSchema: Schema = new Schema({
@@ -17,6 +22,11 @@ const PeopleSchema: Schema = new Schema({
   age: { type: Number, required: true, default: 0 },
   gender: { type: String, enum: Object.values(Gender), required: true },
   race: { type: String, enum: Object.values(Race), required: true },
+  health: { type: Number, required: true, default: 1 },
+  strong: { type: Number, required: true, default: 1 },
+  inteligence: { type: Number, required: true, default: 1 },
+  endurence: { type: Number, required: true, default: 1 },
+  dexterity: { type: Number, required: true, default: 1 },
 });
 
 export default mongoose.model<IPeople>("People", PeopleSchema);

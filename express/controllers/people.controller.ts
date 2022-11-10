@@ -1,8 +1,8 @@
-import { Gender, Race, Stats } from "../enums/enum";
+import { Gender, Job, Race, Stats } from "../enums/enum";
 import People, { IPeople } from "../models/people.model";
 import { nameByRace } from "fantasy-name-generator";
 import mongoose from "mongoose";
-import { randomIntFromInterval } from "../helper/utils.helper";
+import { randomEnum, randomIntFromInterval } from "../helper/utils.helper";
 
 function generatePeople(): IPeople {
   const race = randomEnum(Race);
@@ -12,10 +12,13 @@ function generatePeople(): IPeople {
     name: randomeName(race, gender),
     age: randomAge(),
     gender: randomEnum(Gender),
+    job: randomEnum(Job),
     city: mongoose.Types.ObjectId(),
     race: race,
   } as IPeople;
 }
+
+//increase exp job,
 
 async function enterInCity(idPeople: string, idCity: string) {
   return People.findByIdAndUpdate(
@@ -71,14 +74,6 @@ async function find(options: any): Promise<IPeople[]> {
   return People.find(options);
 }
 
-function randomEnum<T>(enumeration: any) {
-  const keys = Object.keys(enumeration).filter(
-    (k) => !(Math.abs(Number.parseInt(k)) + 1)
-  );
-  const enumKey = keys[Math.floor(Math.random() * keys.length)];
-  return enumeration[enumKey];
-}
-
 function randomAge(): number {
   return randomIntFromInterval(1, 100);
 }
@@ -101,7 +96,6 @@ export default {
   findById,
   findOne,
   find,
-  randomEnum,
   randomAge,
   randomeName,
 };

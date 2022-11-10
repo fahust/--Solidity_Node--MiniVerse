@@ -54,7 +54,7 @@ async function putItemInCity(idPeople: string) {
     items["items." + item] = people!.items[item as Item];
   });
 
-  await cityModel.findByIdAndUpdate(
+  return cityModel.findByIdAndUpdate(
     people?.city,
     {
       $inc: items,

@@ -8,7 +8,7 @@ import { randomEnum, randomIntFromInterval } from "../../helper/utils.helper";
 import { Item, Job } from "../../enums/enum";
 
 const mongod = new MongoMemoryServer();
-const fakeDataBase = false;
+const fakeDataBase = true;
 
 describe("User controller", () => {
   beforeAll(async () => {
@@ -93,10 +93,10 @@ describe("User controller", () => {
   it("Should gain experience a people", async () => {
     const peoples = await peopleController.find({}, 0, 1);
     let peopleUpdated = peoples[0];
-    for (let index = 0; index < 100; index++) {
+    for (let index = 0; index < 1000; index++) {
       peopleUpdated = await peopleController.increaseExperience(
         peoples[0]._id!,
-        randomIntFromInterval(1, 100)
+        randomIntFromInterval(10, 100)
       );
     }
     expect(peopleUpdated.level).toBeGreaterThan(1);
@@ -143,10 +143,10 @@ describe("User controller", () => {
 
   it("Should put item into city", async () => {
     const peoples = await peopleController.find({}, 0, 1);
-    const peopleUpdated = await peopleController.putItemInCity(
+    const cityUpdated = await peopleController.putItemInCity(
       peoples[0]._id!
     );
-    console.log(peopleUpdated)
+    expect(cityUpdated.items).toEqual(peoples[0].items)
   });
 
 });

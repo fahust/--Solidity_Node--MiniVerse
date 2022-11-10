@@ -1,4 +1,9 @@
 module.exports = {
-  "bail": 1,
-  "verbose": true
+  preset: 'ts-jest',
+  testEnvironment: 'node',
+  transform: {
+    '^.+\\.ts?$': 'ts-jest',
+  },
+  transformIgnorePatterns: ['<rootDir>/node_modules/'],
+  setupFiles: ['<rootDir>/.jest/setEnvVars.js'],
 };

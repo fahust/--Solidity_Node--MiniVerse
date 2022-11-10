@@ -1,19 +1,31 @@
 const mongoose = require("mongoose");
-import { IPeople } from "~~/models/people.model";
+const { MongoMemoryServer } = require("mongodb-memory-server");
+import { IPeople } from "../../models/people.model";
 import Controller from "../people.controller";
+
+const mongod = new MongoMemoryServer();
 
 describe("User controller", () => {
   const ENV = process.env;
-  console.log(ENV)
   beforeAll(async () => {
-    await mongoose.connect(process.env.MONGO_URI, {
+    const uri = await mongod.getUri();
+
+    const mongooseOpts = {
       useNewUrlParser: true,
-    });
+      autoReconnect: true,
+      reconnectTries: Number.MAX_VALUE,
+      reconnectInterval: 1000,
+    };
+
+    await mongoose.connect(uri, mongooseOpts);
   });
 
   afterAll(async () => {
-    mongoose.connection.close();
+    await mongoose.connection.dropDatabase();
+    await mongoose.connection.close();
+    await mongod.stop();
   });
+
   it("Should create a people", async () => {
     const people = {
       name: "test",
@@ -22,7 +34,13 @@ describe("User controller", () => {
     } as IPeople;
 
     const peopleCreated = await Controller.create(people);
-    console.log(peopleCreated);
-    //expect(user.email).toEqual(email);
+    expect(peopleCreated.name).toEqual(people.name);
+    expect(peopleCreated.age).toEqual(people.age);
+    expect(peopleCreated.gender).toEqual(people.gender);
+  });
+
+  it("find all people", async () => {
+    const peopleCreated = await Controller.find({});
+    expect(peopleCreated.length).toBeGreaterThan(0);
   });
 });

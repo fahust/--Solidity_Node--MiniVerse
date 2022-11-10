@@ -79,8 +79,13 @@ describe("User controller", () => {
       cityCreated._id
     );
 
-    console.log(peoples);
-
     expect(entered?.city).toEqual(cityCreated._id);
+  });
+
+  it("Should level up a people", async () => {
+    const peoples = await peopleController.find({});
+
+    const peopleUpdated = await peopleController.levelUp(peoples[0]._id!);
+    console.log(peopleUpdated)
   });
 });

@@ -18,6 +18,20 @@ function generatePeople(): IPeople {
   } as IPeople;
 }
 
+function changeJob(idPeople: string, job: Job) {
+  return People.findByIdAndUpdate(
+    idPeople,
+    {
+      $set: {
+        job: job,
+      },
+    },
+    {
+      new: true,
+    }
+  );
+}
+
 //increase exp job,
 
 async function enterInCity(idPeople: string, idCity: string) {
@@ -70,8 +84,8 @@ async function findOne(options: any): Promise<IPeople | null> {
   return People.findOne(options);
 }
 
-async function find(options: any): Promise<IPeople[]> {
-  return People.find(options);
+async function find(options: any, skip = 0, limit = 0): Promise<IPeople[]> {
+  return People.find(options).skip(skip).limit(limit);
 }
 
 function randomAge(): number {
@@ -88,6 +102,7 @@ function randomeName(race: Race, gender: Gender) {
 
 export default {
   generatePeople,
+  changeJob,
   enterInCity,
   increaseExperience,
   levelUp,

@@ -8,7 +8,7 @@ import { randomEnum, randomIntFromInterval } from "../../helper/utils.helper";
 import { Item, Job } from "../../enums/enum";
 
 const mongod = new MongoMemoryServer();
-const fakeDataBase = true;
+const fakeDataBase = false;
 
 describe("User controller", () => {
   beforeAll(async () => {
@@ -74,14 +74,16 @@ describe("User controller", () => {
       name: "test",
     } as ICity);
 
-    const peoples = await peopleController.find({}, 0, 1);
+    const peoples = await peopleController.find({}, 0, 0);
 
-    const entered = await peopleController.enterInCity(
-      peoples[0]._id!,
-      cityCreated._id
-    );
+    for (let index = 0; index < peoples.length; index++) {
+      const entered = await peopleController.enterInCity(
+        peoples[index]._id!,
+        cityCreated._id
+      );
 
-    expect(entered?.city).toEqual(cityCreated._id);
+      expect(entered?.city).toEqual(cityCreated._id);
+    }
   });
 
   it("Should level up a people", async () => {
@@ -143,10 +145,17 @@ describe("User controller", () => {
 
   it("Should put item into city", async () => {
     const peoples = await peopleController.find({}, 0, 1);
-    const cityUpdated = await peopleController.putItemInCity(
-      peoples[0]._id!
-    );
-    expect(cityUpdated.items).toEqual(peoples[0].items)
+    const cityUpdated = await peopleController.putItemInCity(peoples[0]._id!);
+    expect(cityUpdated.items).toEqual(peoples[0].items);
   });
 
+  it("Do Job", async () => {
+    const peoples = await peopleController.find({}, 0, 0);
+    for (let index = 0; index < peoples.length; index++) {
+      for (let index = 0; index < randomIntFromInterval(1, 30); index++) {
+        const items = await peopleController.doJob(peoples[index]);
+        if (items) await peopleController.putItemInCity(peoples[index]._id!);
+      }
+    }
+  });
 });

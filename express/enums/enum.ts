@@ -41,4 +41,6 @@ export enum Item {
   FISH = "FISH",
   FOOD = "FOOD",
   STONE = "STONE",
+  SHIELD = "SHIELD",
+  MUSHROOM = "MUSHROOM",
 }

@@ -4,6 +4,7 @@ import { nameByRace } from "fantasy-name-generator";
 import mongoose from "mongoose";
 import { randomEnum, randomIntFromInterval } from "../helper/utils.helper";
 import cityModel from "../models/city.model";
+import { itemsJobs } from "../models/constant/contant";
 
 function generatePeople(): IPeople {
   const race = randomEnum(Race);
@@ -28,7 +29,7 @@ function generatePeople(): IPeople {
   } as IPeople;
 }
 
-function increaseItem(idPeople: string, item: Item) {
+async function increaseItem(idPeople: string, item: Item) {
   const itemKey = "items." + item;
   return People.findByIdAndUpdate(
     idPeople,
@@ -48,7 +49,6 @@ async function putItemInCity(idPeople: string) {
   const people = await People.findByIdAndUpdate(idPeople, {
     $set: { items: {} },
   });
-
   const items = {} as Record<string, number>;
   Object.keys(people!.items).forEach((item) => {
     items["items." + item] = people!.items[item as Item];
@@ -66,7 +66,7 @@ async function putItemInCity(idPeople: string) {
   );
 }
 
-function changeJob(idPeople: string, job: Job) {
+async function changeJob(idPeople: string, job: Job) {
   return People.findByIdAndUpdate(
     idPeople,
     {
@@ -80,7 +80,7 @@ function changeJob(idPeople: string, job: Job) {
   );
 }
 
-function increaseJobExperience(idPeople: string, job: Job) {
+async function increaseJobExperience(idPeople: string, job: Job) {
   const jobKey = "jobsExperience." + job;
   return People.findByIdAndUpdate(
     idPeople,
@@ -94,6 +94,28 @@ function increaseJobExperience(idPeople: string, job: Job) {
       upsert: true,
     }
   );
+}
+
+async function doJob(people: IPeople) {
+  const successedJob = randomIntFromInterval(
+    1,
+    31 + people.jobsExperience[people.job]
+  );
+  if (successedJob > 30) {
+    const newItem =
+      itemsJobs[people.job][
+        Math.floor(Math.random() * itemsJobs[people.job].length)
+      ];
+    const itemAdded = await increaseItem(people._id!, newItem);
+    const successedIncreaseExperienceJob = randomIntFromInterval(1, 100);
+    if (
+      successedIncreaseExperienceJob >
+      80 + people.jobsExperience[people.job] / 100
+    ) {
+      await increaseJobExperience(people._id!, people.job);
+    }
+    return itemAdded;
+  }
 }
 
 async function enterInCity(idPeople: string, idCity: string) {
@@ -166,6 +188,7 @@ export default {
   generatePeople,
   changeJob,
   enterInCity,
+  doJob,
   increaseExperience,
   increaseJobExperience,
   increaseItem,

@@ -5,7 +5,7 @@ import { ICity } from "./city.model";
 export interface IPeople extends Document {
   _id?: string;
   name: string;
-  city?: ICity["_id"];
+  city: ICity["_id"];
   age: number;
   gender: Gender;
   race: Race;
@@ -13,7 +13,7 @@ export interface IPeople extends Document {
 
 const PeopleSchema: Schema = new Schema({
   name: { type: String, required: true },
-  city: { type: Schema.Types.ObjectId, required: false },
+  city: { type: Schema.Types.ObjectId, required: true, ref: "City" },
   age: { type: Number, required: true, default: 0 },
   gender: { type: String, enum: Object.values(Gender), required: true },
   race: { type: String, enum: Object.values(Race), required: true },

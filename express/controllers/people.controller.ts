@@ -1,6 +1,8 @@
 import { Gender, Race } from "../enums/enum";
 import People, { IPeople } from "../models/people.model";
 import { nameByRace } from "fantasy-name-generator";
+import mongoose from "mongoose";
+import cityModel from "../models/city.model";
 
 function generatePeople(): IPeople {
   const race = randomEnum(Race);
@@ -10,9 +12,26 @@ function generatePeople(): IPeople {
     name: randomeName(race, gender),
     age: randomAge(),
     gender: randomEnum(Gender),
+    city: mongoose.Types.ObjectId(),
     race: race,
   } as IPeople;
 }
+
+async function enterInCity(idPeople: string, idCity: string) {
+  return People.findByIdAndUpdate(
+    idPeople,
+    {
+      $set: {
+        city: idCity,
+      },
+    },
+    {
+      new: true,
+    }
+  );
+}
+
+//level up
 
 async function create(people: IPeople): Promise<IPeople> {
   return People.create(people);
@@ -56,6 +75,7 @@ function randomeName(race: Race, gender: Gender) {
 
 export default {
   generatePeople,
+  enterInCity,
   create,
   insertMany,
   findById,

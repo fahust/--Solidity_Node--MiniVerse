@@ -5,11 +5,11 @@ import peopleController from "../people.controller";
 import cityController from "../city.controller";
 import { ICity } from "../../models/city.model";
 import { randomEnum, randomIntFromInterval } from "../../helper/utils.helper";
-import { Item, Job } from "../../enums/enum";
+import { Building, Item, Job } from "../../enums/enum";
 
 const countPeople = 100;
 const mongod = new MongoMemoryServer();
-const fakeDataBase = true;
+const fakeDataBase = false;
 
 describe("User controller", () => {
   beforeAll(async () => {
@@ -24,9 +24,6 @@ describe("User controller", () => {
 
       const mongooseOpts = {
         useNewUrlParser: true,
-        autoReconnect: true,
-        reconnectTries: Number.MAX_VALUE,
-        reconnectInterval: 1000,
         useUnifiedTopology: true,
         useFindAndModify: false,
       };
@@ -77,6 +74,7 @@ describe("User controller", () => {
   it("Should create a city", async () => {
     const cityCreated = await cityController.create({
       name: "test",
+      houseInBuilding: Building.HOUSE,
     } as ICity);
 
     const peoples = await peopleController.find({}, 0, 0);
@@ -161,6 +159,13 @@ describe("User controller", () => {
         const items = await peopleController.doJob(peoples[index]);
         if (items) await peopleController.putItemInCity(peoples[index]._id!);
       }
+    }
+  });
+
+  it("build", async () => {
+    const city = await cityController.find({}, 0, 0);
+    for (let index = 0; index < randomIntFromInterval(300,1000); index++) {
+      const cityUpdated = await cityController.build(city[0]._id);
     }
   });
 });
